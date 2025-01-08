@@ -1,0 +1,6 @@
+CREATE TABLE Usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    correoElectronico VARCHAR(150) NOT NULL UNIQUE,
+    contrasena VARCHAR(20) NOT NULL
+);
