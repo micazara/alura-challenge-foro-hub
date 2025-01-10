@@ -1,10 +1,12 @@
 package com.alura.foro_hub.controller;
 
 import java.net.URI;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +16,6 @@ import org.springframework.data.domain.*;
 import org.springframework.data.web.PageableDefault;
 
 import org.springframework.http.ResponseEntity;
-
 
 import com.alura.foro_hub.domain.topico.Topico;
 import com.alura.foro_hub.domain.topico.TopicoRepository;
@@ -45,6 +46,12 @@ public class TopicoController {
     @GetMapping
     public ResponseEntity<Page<DatosRespuestaTopico>> mostrarTodos(@PageableDefault(size = 8) Pageable paginacion) {
         return ResponseEntity.ok(topicoRepository.findAll(paginacion).map(DatosRespuestaTopico::new));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<DatosRespuestaTopico> detallarTopico(@PathVariable Long id) {
+        Topico topico = topicoRepository.getReferenceById(id);
+        return ResponseEntity.ok(new DatosRespuestaTopico(topico));
     }
 
 }
