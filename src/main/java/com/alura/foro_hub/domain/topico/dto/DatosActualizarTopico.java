@@ -5,13 +5,13 @@ import com.alura.foro_hub.domain.usuario.Usuario;
 
 import jakarta.validation.constraints.*;
 
-public record DatosRegistroTopico(
+public record DatosActualizarTopico(
     @NotBlank
     String titulo, 
     @NotBlank
     String mensaje, 
     @NotNull
-    Usuario autor, 
+    Usuario usuario, 
     @NotNull
     Curso curso) {
 

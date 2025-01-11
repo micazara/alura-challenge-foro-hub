@@ -1,8 +1,10 @@
 package com.alura.foro_hub.domain.topico;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import com.alura.foro_hub.domain.curso.Curso;
+import com.alura.foro_hub.domain.topico.dto.DatosActualizarTopico;
 import com.alura.foro_hub.domain.usuario.Usuario;
 
 import jakarta.persistence.Entity;
@@ -17,10 +19,12 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity(name = "Topico")
 @Table(name = "Topicos")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -48,5 +52,4 @@ public class Topico {
         this.autor = autor;
         this.curso = curso;
     }
-
 }

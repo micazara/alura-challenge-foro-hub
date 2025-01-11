@@ -1,6 +1,7 @@
 package com.alura.foro_hub.domain.usuario;
 
-import jakarta.persistence.Column;
+import com.alura.foro_hub.domain.topico.dto.DatosActualizarTopico;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,5 +22,18 @@ public class Usuario {
     private String nombre;
     private String correo_electronico;
     private String contrasena;
+
+    public Usuario actualizar(Usuario datos) {
+        if (datos.nombre != null) {
+            this.nombre = datos.nombre;
+        }
+        if (datos.correo_electronico != null) {
+            this.correo_electronico = datos.correo_electronico;
+        }
+        if (datos.contrasena != null) {
+            this.contrasena = datos.contrasena;
+        }
+        return this;
+    }
 
 }

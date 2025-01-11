@@ -25,4 +25,15 @@ public class Curso {
     private String nombre;
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
+
+    public Curso actualizar(Curso datos) {
+        if (datos.nombre != null) {
+            this.nombre = datos.nombre;
+        }
+        if (datos.categoria != null) {
+            this.categoria = datos.categoria;
+        }
+        return this;
+    }
+    
 }
