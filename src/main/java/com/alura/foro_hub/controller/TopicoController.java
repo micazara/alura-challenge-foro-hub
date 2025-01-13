@@ -71,28 +71,8 @@ public class TopicoController {
     @Transactional
     public ResponseEntity<DatosRespuestaTopico> actualizarUnTopico(@PathVariable Long id,
             @RequestBody @Valid DatosActualizarTopico datos) {
-        // Optional<Topico> optionalTopico = topicoRepository.findById(id);
-        // if (optionalTopico.isEmpty()) {
-        //     throw new EntityNotFoundException();
-        // }
-
-        // Topico topico = optionalTopico.get();
-        // topicoService.verificarTopicosDuplicados(datos.titulo(), datos.mensaje());
-        // topico.setTitulo(datos.titulo());
-        // topico.setMensaje(datos.mensaje());
-
-        // Curso curso = cursoRepository.findById(datos.curso().getId())
-        //         .orElseThrow(() -> new EntityNotFoundException());
-        // topico.setCurso(curso);
-
-        // Usuario usuario = usuarioRepository.findById(datos.usuario().getId())
-        //         .orElseThrow(() -> new EntityNotFoundException());
-        // topico.setAutor(usuario);
-
         Topico topicoActualizado = topicoService.actualizar(id, datos);
-
         return ResponseEntity.ok(new DatosRespuestaTopico(topicoActualizado));
-
     }
 
     @DeleteMapping("/{id}")

@@ -1,6 +1,11 @@
 package com.alura.foro_hub.domain.usuario;
 
-import com.alura.foro_hub.domain.topico.dto.DatosActualizarTopico;
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +20,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Usuario {
+public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,6 +39,46 @@ public class Usuario {
             this.contrasena = datos.contrasena;
         }
         return this;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // Devuelve los roles o permisos del usuario
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    @Override
+    public String getPassword() {
+        // Devuelve la contraseña del usuario
+        return contrasena;
+    }
+
+    @Override
+    public String getUsername() {
+        // Devuelve el nombre de usuario
+        return nombre;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        // Devuelve true si la cuenta no ha expirado
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        // Devuelve true si la cuenta no está bloqueada
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
 }
