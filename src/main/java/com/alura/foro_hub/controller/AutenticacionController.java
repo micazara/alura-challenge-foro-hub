@@ -13,6 +13,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.alura.foro_hub.domain.usuario.DatosAuntenticacionUsuario;
+import com.alura.foro_hub.domain.usuario.Usuario;
+import com.alura.foro_hub.infra.security.DatosJWTToken;
+import com.alura.foro_hub.infra.security.TokenService;
 
 import jakarta.validation.Valid;
 
@@ -23,11 +26,16 @@ public class AutenticacionController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private TokenService tokenService;
+
+
     @PostMapping
     public ResponseEntity auntenticarUsuario(@RequestBody @Valid DatosAuntenticacionUsuario datos) {
-        Authentication token = new UsernamePasswordAuthenticationToken(datos.nombre(), datos.clave());
-        this.authenticationManager.authenticate(token);
-        return ResponseEntity.ok().build();
+        Authentication authToken = new UsernamePasswordAuthenticationToken(datos.nombre(), datos.clave());
+        var usuarioAutenticado = this.authenticationManager.authenticate(authToken);
+        var JWTtoken = tokenService.generarToken((Usuario) usuarioAutenticado.getPrincipal());
+        return ResponseEntity.ok(new DatosJWTToken(JWTtoken));
     }
 
 }
