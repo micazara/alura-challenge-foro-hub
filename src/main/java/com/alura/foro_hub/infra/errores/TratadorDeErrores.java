@@ -12,14 +12,27 @@ import jakarta.persistence.EntityNotFoundException;
 @RestControllerAdvice
 public class TratadorDeErrores {
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity tratarError404() {
-        return ResponseEntity.status(404).body("El recurso solicitado no fue encontrado");
+    public ResponseEntity<DatosInformacionError> tratarError404(EntityNotFoundException ex) {
+        String idRecurso = "desconocido";
+
+        // Extraer el ID si está presente en el mensaje de la excepción
+        if (ex.getMessage().contains("with id")) {
+            String[] partes = ex.getMessage().split("with id");
+            if (partes.length > 1) {
+                idRecurso = partes[1].trim();
+            }
+        }
+
+        // Crear un mensaje claro para el usuario
+        String mensaje = "El recurso con la ID " + idRecurso + " no fue encontrado";
+        return ResponseEntity.status(404).body(new DatosInformacionError(mensaje));
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity tratarTipoDeDatoIncorrecto(MethodArgumentTypeMismatchException ex) {
-        return ResponseEntity.status(400).body(
-                "Se ingresó un tipo de dato incorrecto. Debe ser del tipo " + ex.getRequiredType().getSimpleName());
+        String tipoDeDato = ex.getRequiredType().getSimpleName();
+        return ResponseEntity.badRequest()
+                .body(new DatosInformacionError("Se ingresó un tipo de dato incorrecto. Debe ser " + tipoDeDato));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -28,9 +41,18 @@ public class TratadorDeErrores {
         return ResponseEntity.badRequest().body(errores);
     }
 
+    @ExceptionHandler(TopicoYaExistente.class)
+    public ResponseEntity tratarErrorTopicoYaExistente(TopicoYaExistente ex) {
+        return ResponseEntity.badRequest().body(new DatosInformacionError(ex.getMessage()));
+    }
+
     private record DatosErrorValidacion(String campo, String error) {
         public DatosErrorValidacion(FieldError error) {
             this(error.getField(), error.getDefaultMessage());
         }
+    }
+
+    private record DatosInformacionError(String mensaje) {
+
     }
 }
