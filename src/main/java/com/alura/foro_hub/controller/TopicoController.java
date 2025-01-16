@@ -82,7 +82,7 @@ public class TopicoController {
             topicoRepository.deleteById(id);
             return ResponseEntity.noContent().build();
         } else {
-            throw new EntityNotFoundException();
+            throw new EntityNotFoundException("El recurso con la id " + id + " no fue encontrado");
         }
     }
 

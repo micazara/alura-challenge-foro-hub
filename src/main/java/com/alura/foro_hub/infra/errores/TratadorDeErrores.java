@@ -13,18 +13,9 @@ import jakarta.persistence.EntityNotFoundException;
 public class TratadorDeErrores {
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<DatosInformacionError> tratarError404(EntityNotFoundException ex) {
-        String idRecurso = "desconocido";
-
-        // Extraer el ID si está presente en el mensaje de la excepción
-        if (ex.getMessage().contains("with id")) {
-            String[] partes = ex.getMessage().split("with id");
-            if (partes.length > 1) {
-                idRecurso = partes[1].trim();
-            }
-        }
-
-        // Crear un mensaje claro para el usuario
-        String mensaje = "El recurso con la ID " + idRecurso + " no fue encontrado";
+        String mensaje = ex.getMessage() != null
+                ? ex.getMessage()
+                : "El recurso solicitado no existe.";
         return ResponseEntity.status(404).body(new DatosInformacionError(mensaje));
     }
 
