@@ -5,7 +5,7 @@ Esta es mi implementación del challenge back-end Foro Hub de Alura. Está centr
 Un foro es un espacio esencial en plataformas de aprendizaje como Alura, donde estudiantes, profesores y moderadores pueden colaborar, resolver dudas y compartir conocimientos. 
 Además de implementar las [funcionalidades](#funcionalidades) principales, el proyecto incorpora validaciones de negocio, autenticación/autorización y el uso de una base de datos para la persistencia de la información.
 
-La API permite el inicio de sesión, el cual es necesario para acceder a los demás endpoints que permiten realizar el CRUD. Esto es posible gracias a JWT, estándar que permite que los usuarios inicien sesión y accedan a recursos protegidos sin necesidad de mantener una sesión activa en el servidor.
+La API permite el inicio de sesión, el cual es necesario para acceder a los demás endpoints. Esto es posible gracias a JWT, estándar que permite que los usuarios inicien sesión y accedan a recursos protegidos sin necesidad de mantener una sesión activa en el servidor.
 
 ## Tecnologías
 - **Java 17:** como lenguaje de programación principal.
